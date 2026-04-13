@@ -11,7 +11,7 @@ using TaskFlow.API.Data;
 namespace TaskFlow.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260412164512_InitialCreate")]
+    [Migration("20260413094749_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
