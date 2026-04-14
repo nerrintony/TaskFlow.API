@@ -19,8 +19,14 @@ namespace TaskFlow.API.Services
 
         public User CreateUser(User user)
         {
+            Console.WriteLine("step 1: Entered CreateUser");
             _context.Users.Add(user);
+
+            Console.WriteLine("step 2: Add user");
+
             _context.SaveChanges();
+            Console.WriteLine("Step 3: Saved user");
+
             return user;
         }
 

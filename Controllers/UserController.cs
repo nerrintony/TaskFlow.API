@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TaskFlow.API.DTOs;
 using TaskFlow.API.Models;
 using TaskFlow.API.Services;
 
@@ -28,8 +29,14 @@ namespace TaskFlow.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
+        public IActionResult CreateUser(CreateUserDTO dto)
         {
+            var user = new User
+            {
+                Name = dto.Name,
+                Email = dto.Email
+            };
+
             var createUser = _userService.CreateUser(user);
 
             return Ok(createUser);
