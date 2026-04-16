@@ -33,5 +33,25 @@ namespace TaskFlow.API.Services
             _context.SaveChanges();
             return true;
         }
+
+        public bool Approval(int requestId)
+        {
+            var request = _context.Requests.Find(requestId);
+            if (request == null) return false;
+            if (request.Status != "Submitted") return false;
+            request.Status = "Approved";
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool Reject(int requestId)
+        {
+            var request = _context.Requests.Find(requestId);
+            if (request == null) return false;
+            if (request.Status != "Submitted") return false;
+            request.Status = "Rejected";
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

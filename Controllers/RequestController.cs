@@ -45,5 +45,21 @@ namespace TaskFlow.API.Controllers
             return Ok("Request Submitted");
 
         }
+
+        [HttpPost("{id}/approve")]
+        public IActionResult Approve(int id)
+        {
+            var result = _requestService.Approval(id);
+            if (!result) return BadRequest();
+            return Ok("Request Approved");
+        }
+
+        [HttpPost("{id}/reject")]
+        public IActionResult Reject(int id)
+        {
+            var result = _requestService.Reject(id);
+            if (!result) return BadRequest();
+            return Ok("Request Rejected");
+        }
     }
 }
