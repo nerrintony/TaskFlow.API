@@ -36,5 +36,14 @@ namespace TaskFlow.API.Controllers
 
             return Ok(created);
         }
+
+        [HttpPost("{id}/submit")]
+        public IActionResult Submit(int id)
+        {
+            var result = _requestService.Submit(id);
+            if (!result) return BadRequest();
+            return Ok("Request Submitted");
+
+        }
     }
 }

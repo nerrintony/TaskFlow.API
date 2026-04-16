@@ -23,5 +23,15 @@ namespace TaskFlow.API.Services
             _context.SaveChanges();
             return request;
         }
+
+        public bool Submit (int requestId)
+        {
+            var request = _context.Requests.Find(requestId);
+            if (request == null) return false;
+            if (request.Status != "Draft") return false;
+            request.Status = "Submitted";
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
