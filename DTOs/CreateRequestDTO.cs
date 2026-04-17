@@ -1,9 +1,14 @@
-﻿namespace TaskFlow.API.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TaskFlow.API.DTOs
 {
     public class CreateRequestDTO
     {
+        [Required]
         public string Title { get; set; } = string.Empty;
+        [Required]
         public string Description { get; set; } = string.Empty;
-        public int CreatedByUserId { get; set; }
+        [Range(1, int.MaxValue)]
+        public int CreatedByUserId { get; set; } = 0;
     }
 }

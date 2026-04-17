@@ -25,6 +25,10 @@ namespace TaskFlow.API.Controllers
         [HttpPost]
         public IActionResult Create(CreateRequestDTO dto)
         {
+            if (!ModelState.IsValid) { 
+                return BadRequest(ModelState);
+            }
+
             var request = new Request
             {
                 Title = dto.Title,
@@ -34,7 +38,11 @@ namespace TaskFlow.API.Controllers
 
             var created = _requestService.Create(request);
 
-            return Ok(created);
+            return Ok(new
+            {
+                message = "Request create successfully",
+                data = created,
+            });
         }
 
         [HttpPost("{id}/submit")]

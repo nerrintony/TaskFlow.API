@@ -1,4 +1,6 @@
-﻿using TaskFlow.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskFlow.API.Data;
+using TaskFlow.API.DTOs;
 using TaskFlow.API.Models;
 
 namespace TaskFlow.API.Services
@@ -12,9 +14,18 @@ namespace TaskFlow.API.Services
             _context = context;
         }
 
-        public List<Request> GetAll()
+        public List<RequestResponseDTO> GetAll()
         {
-            return _context.Requests.ToList();
+            return _context.Requests
+                .Include(r => r.CreatedByUser)
+                .Select(r => new RequestResponseDTO
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Status = r.Status,
+                    CreatedByUserName = r.CreatedByUser.Name
+                })
+                .ToList();
         }
 
         public Request Create(Request request)
