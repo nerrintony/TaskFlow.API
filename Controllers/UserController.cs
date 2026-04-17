@@ -11,16 +11,10 @@ namespace TaskFlow.API.Controllers
     {
         private readonly UserService _userService;
 
-        public UserController( UserService userServive)
+        public UserController(UserService userServive)
         {
             _userService = userServive;
         }
-
-        //private static List<User> users = new List<User>
-        //{
-        //    new User { Id = 1, Name = "Nerrin", Email = "nerrin@yopmail.com" },
-        //    new User { Id = 2, Name = "TOny", Email = "tony@yopmail.com" },
-        //};
 
         [HttpGet]
         public ActionResult GetUser()
@@ -39,7 +33,12 @@ namespace TaskFlow.API.Controllers
 
             var createUser = _userService.CreateUser(user);
 
-            return Ok(createUser);
+            return Ok(new
+            {
+                message = "Successful",
+                success = true,
+                data = createUser
+            });
         }
 
         [HttpGet("{id}")]
@@ -48,9 +47,18 @@ namespace TaskFlow.API.Controllers
             var user = _userService.GetUserById(id);
 
             if (user == null)
-                return NotFound();
+                return NotFound(new
+                {
+                    message = "User not found",
+                    success = false
+                });
             else
-                return Ok(user);
+                return Ok(new
+                {
+                    message = "Successfull",
+                    success = true,
+                    data = user
+                });
         }
 
         [HttpDelete("{id}")]
@@ -59,9 +67,17 @@ namespace TaskFlow.API.Controllers
             var user = _userService.DeleteUserById(id);
 
             if (user == null)
-                return NotFound();
-            
-            return Ok();
+                return NotFound(new
+                {
+                    message = "User not found",
+                    success = false
+                });
+
+            return Ok(new
+            {
+                message = "User deleted successfully",
+                success = true
+            });
         }
     }
 }

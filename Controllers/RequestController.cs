@@ -25,7 +25,8 @@ namespace TaskFlow.API.Controllers
         [HttpPost]
         public IActionResult Create(CreateRequestDTO dto)
         {
-            if (!ModelState.IsValid) { 
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -49,8 +50,16 @@ namespace TaskFlow.API.Controllers
         public IActionResult Submit(int id)
         {
             var result = _requestService.Submit(id);
-            if (!result) return BadRequest();
-            return Ok("Request Submitted");
+            if (!result) return BadRequest(new
+            {
+                message = "Invalid Request",
+                success = false
+            });
+            return Ok(new
+            {
+                message = "Request Submitted",
+                success = true
+            });
 
         }
 
@@ -58,15 +67,23 @@ namespace TaskFlow.API.Controllers
         public IActionResult Approve(int id)
         {
             var result = _requestService.Approval(id);
-            if (!result) return BadRequest();
-            return Ok("Request Approved");
+            if (!result) return BadRequest(new
+            {
+                message = "Invalid Request",
+                success = false
+            });
+            return Ok(new { message = "Request Approved", success = true });
         }
 
         [HttpPost("{id}/reject")]
         public IActionResult Reject(int id)
         {
             var result = _requestService.Reject(id);
-            if (!result) return BadRequest();
+            if (!result) return BadRequest(new
+            {
+                message = "Invalid Request",
+                success = false
+            });
             return Ok("Request Rejected");
         }
     }
